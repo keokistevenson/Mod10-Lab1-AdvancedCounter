@@ -26,6 +26,7 @@ function AdvancedCounter() {
 
     useEffect(() => {
         // when count changes, add count to history
+        console.log(count);
     }, [count]);
 
     // Pay close attention to the dependency arrays in your useEffect hooks to control when they re-run.
