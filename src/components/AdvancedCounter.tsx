@@ -54,14 +54,18 @@ function AdvancedCounter() {
         <div>
             <header> Counter</header>
             <h1>Current Count: {count}</h1>
-            <button onClick={handleDecrement}>Decrement</button>
-            <button onClick={handleIncrement}>Increment</button>
-            <button onClick={handleReset}>Reset</button>
+            <section className="buttons">
+                <button onClick={handleDecrement}>Decrement</button>
+                <button onClick={handleIncrement}>Increment</button>
+                <button onClick={handleReset}>Reset</button>
+            </section>
 
-            <p><strong>Count History:</strong></p>
-            <ul className="history-list">
-                {history.map((value, index) => (<li key={index}>{value}</li>))}
-            </ul>
+            <section id="history">
+                <p>Current Count: {count}</p>
+                <ul className="history-list">
+                    {history.map((value, index) => (<li key={index}>{value}</li>))}
+                </ul>
+            </section>
 
             <p>Use ArrowUp to increment and ArrowDown to decrement.</p>
 
