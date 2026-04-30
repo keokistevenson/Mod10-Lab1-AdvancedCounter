@@ -4,7 +4,17 @@ import { useState, useEffect } from "react"
 function AdvancedCounter() {
 
     // Use useState to manage the current count, history array, and any other necessary local state.
-    const [count, setCount] = useState(0);
+    const [count, setCount] = useState(() => {
+        const savedCount = localStorage.getItem("AdvancedCounterApp");
+
+        if (savedCount === null) {
+            return 0;
+        }
+
+        return Number(savedCount);
+    });
+
+
     const [history, setHistory] = useState<number[]>([]);
     const [step, setStep] = useState<number>(1);
 
@@ -35,9 +45,11 @@ function AdvancedCounter() {
 
     // Use useEffect for side effects like auto-saving and adding/removing keyboard event listeners.
 
+    // One useEffect per function (as with any typical method--one function)
+    // DISPLAY HISTORY
     useEffect(() => {
         // when count changes, add count to history
-        console.log("This is my count:", count);
+        console.log("Array, we are counting on you:", count);
         // setHistory(currentArray => [...currentArray, count]);  // prevHistory is confusing when there is no real "previous" history.
 
         // Counteract React's Strict Mode Development issue: Runs twice
@@ -50,10 +62,20 @@ function AdvancedCounter() {
 
             return [...currentArray, count];
         });
-
-
-        console.log(history);
+        // console.log(history);
     }, [count]);
+
+
+    // SAVE IN LOCALSTORAGE
+    useEffect(() => {
+        console.log("LocalStorage we are counting on you:", count);
+
+        //  Will React's development safe mode try to save this twice?
+        localStorage.setItem("AdvancedCounterApp", String(count));
+
+    }, [count]);
+
+
 
     // Pay close attention to the dependency arrays in your useEffect hooks to control when they re-run.
 
