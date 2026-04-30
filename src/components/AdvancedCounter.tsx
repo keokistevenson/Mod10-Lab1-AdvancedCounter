@@ -5,7 +5,7 @@ function AdvancedCounter() {
 
     // Use useState to manage the current count, history array, and any other necessary local state.
     const [count, setCount] = useState(0);
-    const [history, setHistory] = useState<number[]>([0]);
+    const [history, setHistory] = useState<number[]>([]);
 
     const handleIncrement = () => {
         setCount(count => count + 1);
@@ -26,7 +26,9 @@ function AdvancedCounter() {
 
     useEffect(() => {
         // when count changes, add count to history
-        console.log(count);
+        console.log("This is my count:", count);
+        setHistory(currentArray => [...currentArray, count]);  // prevHistory is confusing when there is no real "previous" history.
+        console.log(history);
     }, [count]);
 
     // Pay close attention to the dependency arrays in your useEffect hooks to control when they re-run.
@@ -42,6 +44,9 @@ function AdvancedCounter() {
             <button onClick={handleDecrement}>Decrement</button>
             <button onClick={handleIncrement}>Increment</button>
             <button onClick={handleReset}>Reset</button>
+            <ul  className="history-list">
+                {history.map((value, index) => (<li key={index}>{value}</li>))}
+            </ul>
 
         </div>
     );

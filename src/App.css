@@ -1,0 +1,11 @@
+ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.history-list {
+  max-height: 150px;
+  overflow-y: auto;
+  padding-left: 0;
+  list-style: none;
+}
