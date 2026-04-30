@@ -4,6 +4,9 @@ import { useState, useEffect } from "react"
 function AdvancedCounter() {
 
     // Use useState to manage the current count, history array, and any other necessary local state.
+    const [history, setHistory] = useState<number[]>([]);
+    const [step, setStep] = useState<number>(1);
+    const [saveStatus, setSaveStatus] = useState<string>("");
     const [count, setCount] = useState(() => {
         const savedCount = localStorage.getItem("AdvancedCounterApp");
 
@@ -14,9 +17,6 @@ function AdvancedCounter() {
         return Number(savedCount);
     });
 
-
-    const [history, setHistory] = useState<number[]>([]);
-    const [step, setStep] = useState<number>(1);
 
     const handleIncrement = () => {
         setCount(count => count + step);
@@ -70,9 +70,14 @@ function AdvancedCounter() {
     useEffect(() => {
         console.log("LocalStorage we are counting on you:", count);
 
+        setSaveStatus("Saving to Local Storage ...");
         //  Will React's development safe mode try to save this twice?
-        localStorage.setItem("AdvancedCounterApp", String(count));
+        const timerId = setTimeout(() => {
+            localStorage.setItem("AdvancedCounterApp", String(count));
+            setSaveStatus("Changes saved.");
+        }, 1000);
 
+        return () => clearTimeout(timerId);
     }, [count]);
 
 
@@ -94,6 +99,7 @@ function AdvancedCounter() {
             </section>
 
             <section>Step Value: <input type="number" value={step} onChange={handleStepInput} /></section>
+            <section><p aria-live="polite">{saveStatus}</p></section>
 
             <section id="history">
                 <p>Count History:</p>
