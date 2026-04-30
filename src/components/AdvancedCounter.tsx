@@ -27,7 +27,20 @@ function AdvancedCounter() {
     useEffect(() => {
         // when count changes, add count to history
         console.log("This is my count:", count);
-        setHistory(currentArray => [...currentArray, count]);  // prevHistory is confusing when there is no real "previous" history.
+        // setHistory(currentArray => [...currentArray, count]);  // prevHistory is confusing when there is no real "previous" history.
+
+        // Counteract React's Strict Mode Development issue: Runs twice
+        setHistory(currentArray => {
+
+            // Checks value  before adding it again to prevent duplicates caused by strict mode when page first loads.
+            if (currentArray[currentArray.length - 1] === count) {
+                return currentArray;
+            }
+
+            return [...currentArray, count];
+        });
+
+
         console.log(history);
     }, [count]);
 
@@ -44,7 +57,7 @@ function AdvancedCounter() {
             <button onClick={handleDecrement}>Decrement</button>
             <button onClick={handleIncrement}>Increment</button>
             <button onClick={handleReset}>Reset</button>
-            <ul  className="history-list">
+            <ul className="history-list">
                 {history.map((value, index) => (<li key={index}>{value}</li>))}
             </ul>
 
