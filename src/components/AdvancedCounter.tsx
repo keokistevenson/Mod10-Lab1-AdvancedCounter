@@ -27,7 +27,11 @@ function AdvancedCounter() {
     }
 
     const handleReset = () => {
+        // Reset everything
         setCount(0);
+        setHistory([0]);
+        setStep(1);
+
     }
 
     const handleStepInput = (e) => {
