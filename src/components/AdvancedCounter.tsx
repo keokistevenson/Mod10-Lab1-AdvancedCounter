@@ -6,17 +6,28 @@ function AdvancedCounter() {
     // Use useState to manage the current count, history array, and any other necessary local state.
     const [count, setCount] = useState(0);
     const [history, setHistory] = useState<number[]>([]);
+    const [step, setStep] = useState<number>(1);
 
     const handleIncrement = () => {
-        setCount(count => count + 1);
+        setCount(count => count + step);
     }
 
     const handleDecrement = () => {
-        setCount(count => count - 1);
+        setCount(count => count - step);
     }
 
     const handleReset = () => {
         setCount(0);
+    }
+
+    const handleStepInput = (e) => {
+
+        let stepValue = Number(e.target.value);
+        // Step can't be less than 1.
+        if (stepValue < 1) {
+            stepValue = 1;
+        }
+        setStep(stepValue);
     }
 
 
@@ -60,8 +71,10 @@ function AdvancedCounter() {
                 <button onClick={handleReset}>Reset</button>
             </section>
 
+            <section>Step Value: <input type="number" value={step} onChange={handleStepInput} /></section>
+
             <section id="history">
-                <p>Current Count: {count}</p>
+                <p>Count History:</p>
                 <ul className="history-list">
                     {history.map((value, index) => (<li key={index}>{value}</li>))}
                 </ul>
