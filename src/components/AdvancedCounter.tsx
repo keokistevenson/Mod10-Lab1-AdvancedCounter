@@ -5,7 +5,20 @@ function AdvancedCounter() {
 
     // Use useState to manage the current count, history array, and any other necessary local state.
     const [count, setCount] = useState(0);
-    const [history, setHistory] = useState<number[]>([]);
+    const [history, setHistory] = useState<number[]>([0]);
+
+    const handleIncrement = () => {
+        setCount(count => count + 1);
+    }
+
+    const handleDecrement = () => {
+        setCount(count => count - 1);
+    }
+
+    const handleReset = () => {
+        setCount(0);
+    }
+
 
 
 
@@ -23,6 +36,11 @@ function AdvancedCounter() {
 
     return (
         <div>
+            <p> Counter</p>
+            <h1>Current Count: {count}</h1>
+            <button onClick={handleDecrement}>Decrement</button>
+            <button onClick={handleIncrement}>Increment</button>
+            <button onClick={handleReset}>Reset</button>
 
         </div>
     );
