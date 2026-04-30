@@ -1,15 +1,19 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 
 
 function AdvancedCounter() {
 
     // Use useState to manage the current count, history array, and any other necessary local state.
     const [count, setCount] = useState(0);
+    const [history, setHistory] = useState<number[]>([]);
 
 
 
     // Use useEffect for side effects like auto-saving and adding/removing keyboard event listeners.
 
+    useEffect(() => {
+        // when count changes, add count to history
+    }, [count]);
 
     // Pay close attention to the dependency arrays in your useEffect hooks to control when they re-run.
 
