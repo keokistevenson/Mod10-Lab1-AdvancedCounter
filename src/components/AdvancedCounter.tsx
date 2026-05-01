@@ -7,6 +7,7 @@ function AdvancedCounter() {
     const [history, setHistory] = useState<number[]>([]);
     const [step, setStep] = useState<number>(1);
     const [saveStatus, setSaveStatus] = useState<string>("");
+
     const [count, setCount] = useState(() => {
         const savedCount = localStorage.getItem("AdvancedCounterApp");
 
@@ -19,12 +20,15 @@ function AdvancedCounter() {
 
 
     const handleIncrement = () => {
+        console.log("increment");
         setCount(count => count + step);
     }
 
     const handleDecrement = () => {
+        console.log("decrement");
         setCount(count => count - step);
     }
+
 
     const handleReset = () => {
         // Reset everything
@@ -43,7 +47,6 @@ function AdvancedCounter() {
         }
         setStep(stepValue);
     }
-
 
 
 
@@ -85,11 +88,31 @@ function AdvancedCounter() {
     }, [count]);
 
 
+    // Add Event Listener
+    useEffect(() => {
+        console.log("Add Listener for Key Press Added Only Once");
 
-    // Pay close attention to the dependency arrays in your useEffect hooks to control when they re-run.
+        const handleKeyPress = (e: KeyboardEvent) => {
+            // console.log("First: ", e.key);
+
+            // Check to see if Key Press is Arrow UP or Arrow DOWN
+            if (e.key === "ArrowUp") {
+                //console.log(e.key);
+                handleIncrement();
+            }
+
+            if (e.key === "ArrowDown") {
+                handleDecrement();
+            }
+        };
 
 
-    // Ensure all useEffect hooks that set up subscriptions or event listeners have proper cleanup functions.
+        // Any key down
+        document.addEventListener("keydown", handleKeyPress);
+
+        // Clean Up!
+        return () => document.removeEventListener("keydown", handleKeyPress);;
+    }, [step]);
 
 
     return (
